@@ -10,14 +10,23 @@ def _save_data() -> None:
 
 
 def add_product(product: Product) -> bool:
+    """
+    Add a product to the database.
+    """
     pass
 
 
 def remove_product(product: Product) -> bool:
+    """
+    Remove a product from the database.
+    """
     pass
 
 
 def list_products() -> list[Product]:
+    """
+    List all products in the database.
+    """
     pass
 
 

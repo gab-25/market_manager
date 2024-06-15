@@ -3,12 +3,15 @@ from market_manager.product import Product
 from market_manager import data
 
 
-def _add_product(name: str = None, amount: int = None, purchase_price: int = None, selling_price: int = None):
+def _add_product(name: str = None, amount: int = None, purchase_price: float = None, selling_price: float = None):
+    """
+    Adds a product to the market.
+    """
     try:
         name = name or input("Nome del prodotto: ")
         amount = amount or int(input("Quantità: "))
-        purchase_price = purchase_price or int(input("Prezzo di acquisto: "))
-        selling_price = selling_price or int(input("Prezzo di vendita: "))
+        purchase_price = purchase_price or float(input("Prezzo di acquisto: "))
+        selling_price = selling_price or float(input("Prezzo di vendita: "))
     except ValueError:
         print("Errore: valore non valido!")
         _add_product(name=name, amount=amount, purchase_price=purchase_price, selling_price=selling_price)
@@ -21,10 +24,16 @@ def _shop_products():
 
 
 def _list_products():
+    """
+    Lists all products in the market.
+    """
     pass
 
 
 def _print_help():
+    """
+    Prints the help message.
+    """
     print(
         "I comandi disponibili sono i seguenti:\n"
         "- aggiungi: aggiungi un prodotto al magazzino\n"
