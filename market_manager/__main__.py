@@ -45,7 +45,7 @@ def _print_help():
     )
 
 
-print("""
+print(f"""
 
   __  __            _        _     __  __                                   
  |  \/  |          | |      | |   |  \/  |                                  
@@ -55,8 +55,8 @@ print("""
  |_|  |_|\__,_|_|  |_|\_\___|\__| |_|  |_|\__,_|_| |_|\__,_|\__, |\___|_|   
                                                              __/ |          
                                                             |___/           
-v{version}
-""".format(version=VERSION))
+v{VERSION}
+""")
 
 while True:
     try:
