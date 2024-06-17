@@ -14,3 +14,11 @@ class Product:
         self.amount = amount
         self.purchase_price = purchase_price
         self.selling_price = selling_price
+
+    def __dict__(self):
+        return {
+            "name": self.name,
+            "amount": self.amount,
+            "purchase_price": self.purchase_price,
+            "selling_price": self.selling_price,
+        }

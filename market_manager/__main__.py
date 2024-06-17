@@ -81,8 +81,6 @@ while True:
         if command == "chiudi":
             print("Bye bye!\n")
             break
-    except Exception as e:
-        print("Errore:", e)
     except KeyboardInterrupt:
         print("\nBye bye!\n")
         break
