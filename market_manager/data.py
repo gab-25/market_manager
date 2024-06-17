@@ -18,24 +18,18 @@ def _load_data() -> None:
 
 def _save_data() -> None:
     products = list(_database.values())
-    if len(products) == 0:
-        return
-
     with open(FILE_DATA, "w", encoding="utf-8") as file:
-        writer = csv.DictWriter(file, fieldnames=dict(products[0]).keys())
+        writer = csv.DictWriter(file, fieldnames=products[0].__dict__.keys())
         writer.writeheader()
         for product in products:
-            writer.writerow(**dict(product))
+            writer.writerow(product.__dict__)
 
 
 def add_product(product: Product) -> bool:
     """
     Add a product to the database.
     """
-    if _database.get(product.name) is not None:
-        _database[product.name].amount += product.amount
-    else:
-        _database[product.name] = product
+    _database[product.name] = product
     _save_data()
     return True
 
@@ -49,21 +43,18 @@ def remove_product(product: Product) -> bool:
     return True
 
 
-def list_products() -> list[Product]:
-    """
-    List all products in the database.
-    """
-    print("Prodotti in magazzino:")
-    for product in _database:
-        print(f"- {product.name} ({product.amount})")
-    return _database
-
-
 def get_product(name: str) -> Product:
     """
     Get a product from the database.
     """
     return _database[name]
+
+
+def get_products() -> list[Product]:
+    """
+    Get all products in the database.
+    """
+    return list(_database.values())
 
 
 _load_data()

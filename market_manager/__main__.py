@@ -9,13 +9,20 @@ def _add_product(name: str = None, amount: int = None, purchase_price: float = N
     """
     try:
         name = name or input("Nome del prodotto: ")
+        if len(name) == 0:
+            raise ValueError
         amount = amount or int(input("Quantità: "))
-        purchase_price = purchase_price or float(input("Prezzo di acquisto: "))
-        selling_price = selling_price or float(input("Prezzo di vendita: "))
+        product = data.get_product(name)
+        if product is None:
+            purchase_price = purchase_price or float(input("Prezzo di acquisto: "))
+            selling_price = selling_price or float(input("Prezzo di vendita: "))
     except ValueError:
         print("Errore: valore non valido!")
         _add_product(name=name, amount=amount, purchase_price=purchase_price, selling_price=selling_price)
-    product = Product(name, amount, purchase_price, selling_price)
+    if product is None:
+        product = Product(name, amount, purchase_price, selling_price)
+    else:
+        product.amount += amount
     data.add_product(product)
 
 
@@ -27,7 +34,9 @@ def _list_products():
     """
     Lists all products in the market.
     """
-    pass
+    print("Prodotti in magazzino:")
+    for product in data.get_products():
+        print(f"- {product.name} ({product.amount})\n")
 
 
 def _print_help():
