@@ -12,20 +12,21 @@ def _load_data() -> None:
         with open(FILE_DATA, "r", encoding="utf-8") as file:
             reader = csv.DictReader(file)
             for row in reader:
-                product = Product(**row)
+                product = Product(
+                    row["name"], int(row["amount"]), float(row["purchase_price"]), float(row["selling_price"])
+                )
                 _database[product.name] = product
 
 
 def _save_data() -> None:
-    products = list(_database.values())
     with open(FILE_DATA, "w", encoding="utf-8") as file:
-        writer = csv.DictWriter(file, fieldnames=products[0].__dict__.keys())
+        writer = csv.DictWriter(file, fieldnames=["name", "amount", "purchase_price", "selling_price"])
         writer.writeheader()
-        for product in products:
+        for product in _database.values():
             writer.writerow(product.__dict__)
 
 
-def add_product(product: Product) -> bool:
+def save_product(product: Product) -> bool:
     """
     Add a product to the database.
     """
@@ -34,11 +35,13 @@ def add_product(product: Product) -> bool:
     return True
 
 
-def remove_product(product: Product) -> bool:
+def remove_product(name: str) -> bool:
     """
     Remove a product from the database.
     """
-    del _database[product.name]
+    if name not in _database:
+        return False
+    del _database[name]
     _save_data()
     return True
 
@@ -47,7 +50,7 @@ def get_product(name: str) -> Product:
     """
     Get a product from the database.
     """
-    return _database[name]
+    return _database.get(name)
 
 
 def get_products() -> list[Product]:
