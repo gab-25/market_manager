@@ -45,7 +45,7 @@ def shop_products():
 
             registered_sale.append((amount, product.name, product.selling_price))
 
-            close_shop = input("Aggiungere un altro prodotto ? (si/NO)") == "si"
+            close_shop = input("Aggiungere un altro prodotto ? (si/NO)") != "si"
         except ValueError:
             print("Errore: prodotto non in magazzino!")
 

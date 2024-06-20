@@ -15,6 +15,7 @@ from market_manager.constants import FILE_DATA
 
 class DataTest(unittest.TestCase):
     """Test the data module"""
+
     def setUp(self):
         # Clear the database before each test
         _database.clear()
@@ -26,7 +27,8 @@ class DataTest(unittest.TestCase):
         self.assertTrue(save_product(product))
         self.assertEqual(get_product("Apple"), product)
 
-    def test_remove_product(self):
+    @patch("builtins.open")
+    def test_remove_product(self, mock_open):
         """Test removing a product"""
         product = Product("Banana", 5, 0.5, 0.8)
         save_product(product)
@@ -51,8 +53,9 @@ class DataTest(unittest.TestCase):
         self.assertIn(product1, products)
         self.assertIn(product2, products)
 
+    @patch("os.path.exists", return_value=True)
     @patch("market_manager.data._save_data")
-    def test_load_data(self, mock_save_data):
+    def test_load_data(self, mock_save_data, mock_exists):
         """Test loading data from CSV file"""
         # Mock the CSV file content
         CSV_DATA = (
@@ -78,10 +81,6 @@ class DataTest(unittest.TestCase):
         _database[product2.name] = product2
         _save_data()
         mock_open.assert_called_once_with(FILE_DATA, "w", encoding="utf-8")
-        # You'll need to assert the content written to the file here
-        # using mock_open.return_value.write.assert_called_once_with(...)
-
-    # ... Add more tests for edge cases and error handling ...
 
 
 if __name__ == "__main__":
