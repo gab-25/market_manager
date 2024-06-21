@@ -108,3 +108,37 @@ def print_help():
         "- aiuto: mostra i possibili comandi\n"
         "- chiudi: esci dal programma\n"
     )
+
+
+def main():
+    """
+    Main function.
+    """
+    while True:
+        try:
+            command = input("Inserisci un comando: ")
+
+            if command == "aiuto" or command not in ["aggiungi", "vendita", "elenca", "profitti", "chiudi"]:
+                if command != "aiuto":
+                    print("Errore: comando non valido!")
+                print_help()
+                continue
+
+            if command == "aggiungi":
+                add_product()
+
+            if command == "vendita":
+                shop_products()
+
+            if command == "elenca":
+                list_products()
+
+            if command == "profitti":
+                profit_products()
+
+            if command == "chiudi":
+                print("Bye bye!\n")
+                break
+        except KeyboardInterrupt:
+            print("\nBye bye!\n")
+            break
