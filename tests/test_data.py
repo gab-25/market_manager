@@ -59,10 +59,10 @@ class DataTest(unittest.TestCase):
         """Test loading data from CSV file"""
         # Mock the CSV file content
         CSV_DATA = (
-            "name,amount,purchase_price,selling_price\n"
-            "Apple,10,1.0,1.5\n"
-            "Banana,5,0.5,0.8\n"
-            "Orange,20,0.75,1.25\n"
+            "name,amount,purchase_price,selling_price,pieces_sold\n"
+            "Apple,10,1.0,1.5,0\n"
+            "Banana,5,0.5,0.8,0\n"
+            "Orange,20,0.75,1.25,0\n"
         )
         with patch("builtins.open", mock_open(read_data=CSV_DATA)):
             _load_data()

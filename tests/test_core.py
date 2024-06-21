@@ -1,7 +1,7 @@
 import unittest
 import io
 from unittest.mock import patch
-from market_manager.core import add_product, shop_products, list_products, print_help
+from market_manager.core import add_product, profit_products, shop_products, list_products, print_help
 from market_manager import data
 from market_manager.product import Product
 
@@ -44,12 +44,12 @@ class TestMarketManager(unittest.TestCase):
     @patch("builtins.open")
     def test_shop_products(self, mock_open):
         """Test shopping products."""
-        with patch("builtins.input", side_effect=["Apple", "3", "si", "Banana", "2", "NO"]):
+        with patch("builtins.input", side_effect=["Apple", "3", "si", "Banana", "2", "no"]):
             shop_products()
             product1 = data.get_product("Apple")
             product2 = data.get_product("Banana")
-            self.assertEqual(product1.amount, 7)
-            self.assertEqual(product2.amount, 3)
+            self.assertEqual(product1.amount - product1.pieces_sold, 7)
+            self.assertEqual(product2.amount - product2.pieces_sold, 3)
 
     def test_list_products(self):
         """Test listing products."""
@@ -61,6 +61,17 @@ class TestMarketManager(unittest.TestCase):
             self.assertIn("5", mock_stdout.getvalue())
             self.assertIn("€1.5", mock_stdout.getvalue())
             self.assertIn("€0.8", mock_stdout.getvalue())
+
+    @patch("market_manager.data.get_products")
+    def test_profit_products(self, mock_get_products):
+        """Test calculating profits."""
+        mock_get_products.return_value = [
+            Product("Apple", 10, 1.0, 2.0, pieces_sold=5),
+            Product("Banana", 5, 0.5, 1.5, pieces_sold=2),
+        ]
+        with patch("builtins.print") as mock_print:
+            profit_products()
+            self.assertIn("Profitto: lordo=€13.00 netto=€7.00", mock_print.call_args_list[0][0][0])
 
     def test_print_help(self):
         """Test printing help message."""

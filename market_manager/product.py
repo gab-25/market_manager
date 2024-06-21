@@ -9,8 +9,9 @@ class Product:
         selling_price (float): selling price of the product
     """
 
-    def __init__(self, name: str, amount: int, purchase_price: float, selling_price: float):
+    def __init__(self, name: str, amount: int, purchase_price: float, selling_price: float, pieces_sold: int = 0):
         self.name = name
         self.amount = amount
         self.purchase_price = purchase_price
         self.selling_price = selling_price
+        self.pieces_sold = pieces_sold

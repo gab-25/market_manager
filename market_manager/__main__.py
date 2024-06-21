@@ -1,5 +1,5 @@
 from market_manager.constants import VERSION
-from market_manager.core import add_product, list_products, print_help, shop_products
+from market_manager.core import add_product, list_products, print_help, profit_products, shop_products
 
 
 def _main():
@@ -22,7 +22,7 @@ v{VERSION}
         try:
             command = input("Inserisci un comando: ")
 
-            if command == "aiuto" or command not in ["aggiungi", "vendita", "elenca", "chiudi"]:
+            if command == "aiuto" or command not in ["aggiungi", "vendita", "elenca", "profitti", "chiudi"]:
                 if command != "aiuto":
                     print("Errore: comando non valido!")
                 print_help()
@@ -36,6 +36,9 @@ v{VERSION}
 
             if command == "elenca":
                 list_products()
+
+            if command == "profitti":
+                profit_products()
 
             if command == "chiudi":
                 print("Bye bye!\n")

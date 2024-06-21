@@ -13,14 +13,18 @@ def _load_data() -> None:
             reader = csv.DictReader(file)
             for row in reader:
                 product = Product(
-                    row["name"], int(row["amount"]), float(row["purchase_price"]), float(row["selling_price"])
+                    row["name"],
+                    int(row["amount"]),
+                    float(row["purchase_price"]),
+                    float(row["selling_price"]),
+                    int(row["pieces_sold"]),
                 )
                 _database[product.name] = product
 
 
 def _save_data() -> None:
     with open(FILE_DATA, "w", encoding="utf-8") as file:
-        writer = csv.DictWriter(file, fieldnames=["name", "amount", "purchase_price", "selling_price"])
+        writer = csv.DictWriter(file, fieldnames=["name", "amount", "purchase_price", "selling_price", "pieces_sold"])
         writer.writeheader()
         for product in _database.values():
             writer.writerow(product.__dict__)
