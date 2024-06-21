@@ -17,7 +17,12 @@ def _main():
                                                             |___/           
 v{VERSION}
 """)
-    main()
+    while True:
+        try:
+            main()
+        except KeyboardInterrupt:
+            print("\nBye bye!\n")
+            break
 
 
 if __name__ == "__main__":

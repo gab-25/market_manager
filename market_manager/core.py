@@ -65,7 +65,7 @@ def shop_products():
 
     print("VENDITA REGISTRATA")
     for sale in registered_sale:
-        print(f"- {sale[0]} X {sale[1]}: €{sale[2]}")
+        print(f"- {sale[0]} X {sale[1]}: €{sale[2]:.2f}")
     total_sale = sum(sale[0] * sale[2] for sale in registered_sale)
     print(f"Totale: €{total_sale:.2f}\n")
 
@@ -114,31 +114,26 @@ def main():
     """
     Main function.
     """
-    while True:
-        try:
-            command = input("Inserisci un comando: ")
+    command = input("Inserisci un comando: ")
 
-            if command == "aiuto" or command not in ["aggiungi", "vendita", "elenca", "profitti", "chiudi"]:
-                if command != "aiuto":
-                    print("Errore: comando non valido!")
-                print_help()
-                continue
+    if command == "aiuto" or command not in ["aggiungi", "vendita", "elenca", "profitti", "chiudi"]:
+        if command != "aiuto":
+            print("Errore: comando non valido!")
+        print_help()
+        return
 
-            if command == "aggiungi":
-                add_product()
+    if command == "aggiungi":
+        add_product()
 
-            if command == "vendita":
-                shop_products()
+    if command == "vendita":
+        shop_products()
 
-            if command == "elenca":
-                list_products()
+    if command == "elenca":
+        list_products()
 
-            if command == "profitti":
-                profit_products()
+    if command == "profitti":
+        profit_products()
 
-            if command == "chiudi":
-                print("Bye bye!\n")
-                break
-        except KeyboardInterrupt:
-            print("\nBye bye!\n")
-            break
+    if command == "chiudi":
+        print("Bye bye!\n")
+        return
