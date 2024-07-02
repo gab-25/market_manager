@@ -1,4 +1,4 @@
-from market_manager.constants import VERSION
+from importlib.metadata import version
 from market_manager.core import main
 
 
@@ -15,7 +15,7 @@ def _main():
 |_|  |_|\__,_|_|  |_|\_\___|\__| |_|  |_|\__,_|_| |_|\__,_|\__, |\___|_|   
                                                             __/ |          
                                                             |___/           
-v{VERSION}
+v{version('market-manager')}
 """)
     while True:
         try:
