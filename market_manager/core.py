@@ -1,3 +1,4 @@
+import sys
 from tabulate import tabulate
 from market_manager import data
 from market_manager.product import Product
@@ -10,9 +11,12 @@ def _input_valid_number(message, type_number):
     while True:
         try:
             if type_number == "int":
-                return int(input(message))
+                value = int(input(message))
             if type_number == "float":
-                return float(input(message))
+                value = float(input(message))
+            if value < 0:
+                raise ValueError
+            return value
         except ValueError:
             print("Errore: valore non valido!")
 
@@ -136,4 +140,4 @@ def main():
 
     if command == "chiudi":
         print("Bye bye!\n")
-        return
+        sys.exit(0)
