@@ -24,7 +24,7 @@ class TestMarketManager(unittest.TestCase):
     @patch("builtins.open")
     def test_add_product(self, mock_open):
         """Test adding a new product."""
-        with patch("builtins.input", side_effect=["Orange", "20", "0.7", "1.0"]):
+        with patch("builtins.input", side_effect=["Orange", "-20", "20", "0.7", "1.0"]):
             add_product()
             product = data.get_product("Orange")
             self.assertIsNotNone(product)
@@ -36,7 +36,7 @@ class TestMarketManager(unittest.TestCase):
     @patch("builtins.open")
     def test_add_existing_product(self, mock_open):
         """Test adding more of an existing product."""
-        with patch("builtins.input", side_effect=["Apple", "5"]):
+        with patch("builtins.input", side_effect=["Apple", "-5", "5"]):
             add_product()
             product = data.get_product("Apple")
             self.assertEqual(product.amount, 15)
@@ -44,7 +44,7 @@ class TestMarketManager(unittest.TestCase):
     @patch("builtins.open")
     def test_shop_products(self, mock_open):
         """Test shopping products."""
-        with patch("builtins.input", side_effect=["Apple", "3", "si", "Banana", "2", "no"]):
+        with patch("builtins.input", side_effect=["Apple", "11", "3", "si", "Banana", "2", "no"]):
             shop_products()
             product1 = data.get_product("Apple")
             product2 = data.get_product("Banana")

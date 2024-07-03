@@ -1,20 +1,51 @@
+import sys
 from tabulate import tabulate
 from market_manager import data
 from market_manager.product import Product
 
 
-def _input_valid_number(message, type_number):
+def _input_valid_number(message: str, type_number: str):
     """
     Gets a valid number from the user.
+    
+    Parameters:
+        message (str): The message to display to the user.
+        type_number (str): The type of number to get from the user.
+    
+    Returns:
+        int or float: The valid number entered by the user.
     """
     while True:
         try:
             if type_number == "int":
-                return int(input(message))
+                value = int(input(message))
             if type_number == "float":
-                return float(input(message))
+                value = float(input(message))
+            if value < 0:
+                raise ValueError
+            return value
         except ValueError:
             print("Errore: valore non valido!")
+
+
+def _input_amount_product(product):
+    """
+    Gets a valid amount of product from the user.
+
+    Parameters:
+        product (Product): The product to get the amount for.
+    
+    Returns:
+        int: The valid amount of product entered by the user.
+    """
+    while True:
+        try:
+            ammont = _input_valid_number("Quantità: ", "int")
+            if ammont > product.amount - product.pieces_sold:
+                raise ValueError
+            return ammont
+        except ValueError:
+            print("Errore: quantità non valida!")
 
 
 def add_product():
@@ -53,7 +84,7 @@ def shop_products():
             product = data.get_product(name)
             if product is None:
                 raise ValueError
-            amount = int(input("Quantità: "))
+            amount = _input_amount_product(product)
             product.pieces_sold += amount
             data.save_product(product)
 
@@ -136,4 +167,4 @@ def main():
 
     if command == "chiudi":
         print("Bye bye!\n")
-        return
+        sys.exit(0)
